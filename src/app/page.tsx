@@ -1,8 +1,9 @@
+import FeaturedItems from "@/components/FeaturedItems";
 
 export default function Home() {
   return (
    <main>
-    Hello World
+   <FeaturedItems></FeaturedItems>
    </main>
   );
 }
