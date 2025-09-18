@@ -1,11 +1,12 @@
 "use client";
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 const FeaturedItems = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
+        fetch('https://jsonplaceholder.typicode.com/posts')
             .then(response => response.json())
             .then(data => setPosts(data))
             .catch(error => console.error('Error fetching posts:', error));
@@ -15,18 +16,19 @@ const FeaturedItems = () => {
     console.log(posts);
 
     return (
-        <div>
-            <h1>All Posts: {posts.length}</h1>
+        <div className='my-3 mx-5'>
+            <h1 className='font-bold text-4xl text-center'>Welcome to our Post Blog</h1>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+            <div className='grid grid-cols-1 space-y-2 md:grid-cols-2 lg:grid-cols-3 gap-4'>
  {
-                posts.slice(0, 5).map((post) => (
-                    <div className="card card-border bg-base-100 w-96">
+                posts.slice(0, 10).map((post) => (
+                    <div key={post.id} className="card card-border bg-base-100 w-96">
                         <div className="card-body">
-                            <h2 className="card-title">Card Title</h2>
-                            <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                            <h1>Post No: {post.id}</h1>
+                            <h2 className="card-title">{post.title}</h2>
+                            <p>{post.body}</p>
                             <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Buy Now</button>
+                                <Link href={`/posts/${post.id}`} className="btn btn-primary">See Post</Link>
                             </div>
                         </div>
                     </div>
