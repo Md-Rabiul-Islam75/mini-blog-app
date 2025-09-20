@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Providers from "./providers";     // ✅ correct import
+import { SearchProvider } from "@/context/SearchContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-11/12 mx-auto space-y-4`}>
         <Providers>
-          <Navbar />
-          {children}
-          <Footer />
+          <SearchProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </SearchProvider>
+
         </Providers>
       </body>
     </html>

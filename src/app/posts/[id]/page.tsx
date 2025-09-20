@@ -18,7 +18,7 @@ const IndividualPost = ({ params }: IndividualPostProps) => {
     }, [params.id])
 
     return (
-        <div>
+        <div className='flex flex-col items-center space-y-2'>
             <h1>Hello from Individual Post {params.id}</h1>
             <div className="card bg-amber-400 text-black w-96">
                 <div className="card-body">
