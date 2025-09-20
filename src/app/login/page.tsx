@@ -1,27 +1,64 @@
-import React from 'react';
+"use client"; // ✅ must be first line
+
+import { loginSuccess } from "@/store/userSlice";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
+type User = {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+};
 
 const LoginPage = () => {
-    return (
-        <div>
-            <div className="hero bg-base-200 min-h-screen">
-                
-                    
-                    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                        <div className="card-body">
-                            <form className="form">
-                                <label className="label">Email</label>
-                                <input type="email" className="input" placeholder="Email" />
-                                <label className="label">Password</label>
-                                <input type="password" className="input" placeholder="Password" />
-                                <div><a className="link link-hover">Forgot password?</a></div>
-                                <button className="btn btn-neutral mt-4">Login</button>
-                            </form>
-                        </div>
-                    </div>
-               
-            </div>
-        </div>
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("password") as HTMLInputElement).value;
+
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+
+    const res = await fetch("/users.json");
+    const users: User[] = await res.json();
+
+    const user = users.find(
+      (u) => u.email.toLowerCase() === email.toLowerCase() && password === u.username
     );
+
+    if (!user) {
+      setError("Invalid email or password.");
+      return;
+    }
+
+    dispatch(loginSuccess(user));
+    
+    //router.push("/"); // ✅ redirect works
+  };
+
+  return (
+    <div className="hero bg-base-200 min-h-screen">
+      <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
+        <div className="card-body">
+          <form onSubmit={handleLogin}>
+            <label className="label">Email</label>
+            <input type="email" name="email" className="input input-bordered" />
+            <label className="label">Password</label>
+            <input type="password" name="password" className="input input-bordered" />
+            {error && <p className="text-red-500 mt-2">{error}</p>}
+            <button className="btn btn-neutral mt-4">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default LoginPage;
