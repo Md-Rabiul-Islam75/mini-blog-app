@@ -2,8 +2,25 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+interface User {
+    username: string;
+    phone: string;
+    address: {
+        city: string;
+    };
+    company: {
+        name: string;
+    };
+}
+
+interface RootState {
+    user: {
+        currentUser: User;
+    };
+}
+
 const Dashboard = () => {
-    const currentUser = useSelector((state: any) => state.user.currentUser);
+    const currentUser = useSelector((state: RootState) => state.user.currentUser);
     console.log(currentUser);
     return (
         <div className=' '>

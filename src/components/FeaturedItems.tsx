@@ -3,8 +3,15 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSearch } from "@/context/SearchContext";
 
+type Post = {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+};
+
 const FeaturedItems = () => {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const { term } = useSearch();                    // ⬅️ read context
 
   useEffect(() => {

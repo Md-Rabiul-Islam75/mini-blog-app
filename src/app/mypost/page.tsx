@@ -2,11 +2,22 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+interface User {
+    id: number;
+    // add other user properties if needed
+}
+
+interface RootState {
+    user: {
+        currentUser: User;
+    };
+}
+
 const MyPost = () => {
-    const currentUser = useSelector((state: any) => state.user.currentUser);
+    const currentUser = useSelector((state: RootState) => state.user.currentUser);
     console.log(currentUser);
 
-    const [mypost, setMypost] = useState([]);
+    const [mypost, setMypost] = useState<{ title?: string; body?: string }>({});
 
     useEffect(() => {
         fetch(`https://jsonplaceholder.typicode.com/posts/${currentUser.id}`)
