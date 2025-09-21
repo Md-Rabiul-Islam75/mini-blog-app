@@ -1,6 +1,7 @@
 "use client"; // ✅ must be first line
 
 import { loginSuccess } from "@/store/userSlice";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -14,6 +15,7 @@ type User = {
 const LoginPage = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const router = useRouter();
   
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ const LoginPage = () => {
 
     dispatch(loginSuccess(user));
     
-    //router.push("/"); // ✅ redirect works
+    router.push("/"); // ✅ redirect works
   };
 
   return (

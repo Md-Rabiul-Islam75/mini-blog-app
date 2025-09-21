@@ -28,7 +28,7 @@ const Navbar = () => {
           MiniBlog
         </Link>
       </div>
-       <div>
+      <div>
         <input
           type="text"
           placeholder="Filter by Post title"
@@ -39,11 +39,19 @@ const Navbar = () => {
       </div>
       {/* Desktop Links */}
       <div className="hidden md:flex items-center gap-6">
-        {links.map((link) => (
-          <Link key={link.id} href={link.url}>
-            {link.title}
-          </Link>
-        ))}
+
+
+        {userLoggedIn && (
+          <>
+            {links.map((link) => (
+              <Link key={link.id} href={link.url}>
+                {link.title}
+              </Link>
+            ))}
+          </>
+        )}
+
+
 
         {!userLoggedIn ? (
           <Link href="/login">Login</Link>
@@ -53,6 +61,7 @@ const Navbar = () => {
             <Link className="mx-5" href={"/logout"}>Logout</Link>
           </>
         )}
+        
       </div>
 
       {/* Mobile menu */}
@@ -87,6 +96,8 @@ const Navbar = () => {
               </Link>
             </div>
 
+             {userLoggedIn && (
+            <>
             {links.map((link) => (
               <Link
                 key={link.id}
@@ -96,6 +107,8 @@ const Navbar = () => {
                 {link.title}
               </Link>
             ))}
+            </>
+             )}
 
             {!userLoggedIn ? (
               <Link href={"/login"} onClick={() => setOpen(false)}>
