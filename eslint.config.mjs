@@ -19,7 +19,7 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
-     ignoreDuringBuilds: true,
+    
   },
 ];
 
