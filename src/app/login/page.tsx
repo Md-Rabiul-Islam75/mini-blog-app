@@ -4,6 +4,7 @@ import { loginSuccess } from "@/store/userSlice";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 type User = {
   id: number;
@@ -16,7 +17,7 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
-  
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -41,7 +42,14 @@ const LoginPage = () => {
     }
 
     dispatch(loginSuccess(user));
-    
+
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Logged In Successfull.",
+      showConfirmButton: false,
+      timer: 1500
+    });
     router.push("/"); // ✅ redirect works
   };
 
